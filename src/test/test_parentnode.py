@@ -1,10 +1,9 @@
 import unittest
-from src.parentnode import ParentNode
-from src.leafnode import LeafNode
+from src.htmlnode import ParentNode, LeafNode
 
 
 class TestParentNode(unittest.TestCase):
-    def test_eq(self):
+    def test_to_html(self):
         children = [
             LeafNode("b", "Bold text"),
             LeafNode(None, "Normal text"),
@@ -12,6 +11,7 @@ class TestParentNode(unittest.TestCase):
             LeafNode(None, "Normal text"),
         ]
         node = ParentNode("p", children)
+        print(f"Test parent: {node}")
 
         self.assertEqual(
             node.to_html(),
