@@ -54,12 +54,10 @@ class LeafNode(HTMLNode):
 
 class ParentNode(HTMLNode):
     def __init__(self, tag, children, props=None):
-        print(f"Children: {children}")
         super().__init__(tag, None, children, props)
         self.tag = tag
         self.children = children
         self.props = props
-        print(f"SELF children: {self.children}")
 
     def __raise_if_invalid(self):
         if self.tag == None:
@@ -72,7 +70,6 @@ class ParentNode(HTMLNode):
         return f"ParentNode({self.tag}, {self.children}, {self.props})"
 
     def to_html(self):
-        print(f"CHILD: {self.children}")
         self.__raise_if_invalid()
         if self.props:
             self.props = self.props.props_to_attributes()
