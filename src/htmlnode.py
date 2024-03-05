@@ -36,7 +36,7 @@ class LeafNode(HTMLNode):
         self.props = props
 
     def __raise_if_no_value(self):
-        if self.value == None:
+        if self.value == None or not isinstance(self.value, str):
             raise ValueError(f"Invalid value {self.value}")
 
     def __repr__(self):
@@ -48,8 +48,7 @@ class LeafNode(HTMLNode):
         if self.tag == None:
             return str(self.value)
 
-        self.props = self.props_to_attributes()
-        return f"<{self.tag}{self.props}>{self.value}</{self.tag}>"
+        return f"<{self.tag}{self.props_to_attributes()}>{self.value}</{self.tag}>"
 
 
 class ParentNode(HTMLNode):
