@@ -1,5 +1,5 @@
 import unittest
-from src.htmlnode import HTMLNode, LeafNode, ParentNode
+from src.htmlnode import *
 
 
 class TestHTMLNode(unittest.TestCase):
@@ -32,6 +32,10 @@ class TestHTMLNode(unittest.TestCase):
             node.props_to_attributes(),
             ' class="rings" href="http://google.com?q=shaq+rings"',
         )
+
+    def test_raise_if_no_value(self):
+        node = LeafNode("p", None)
+        self.assertRaises(ValueError, node.to_html)
 
     def test_to_html_no_tag(self):
         node = LeafNode(None, "just text")
