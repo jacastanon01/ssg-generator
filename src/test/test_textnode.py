@@ -108,7 +108,7 @@ class TestTextNode(unittest.TestCase):
                 ),
                 textnode["type"],
             )
-            print(f"New text node {new_text_node}\n!!!!\n")
+
             self.assertEqual(
                 new_text_node,
                 [
