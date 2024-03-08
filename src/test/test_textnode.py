@@ -88,10 +88,10 @@ class TestTextNode(unittest.TestCase):
 
     def test_delim_all_types(self):
         nodes = [
-            # {
-            #     "node": TextNode("This has **text**", TextType.TEXT),
-            #     "type": TextType.BOLD,
-            # },
+            {
+                "node": TextNode("This has **text**", TextType.TEXT),
+                "type": TextType.BOLD,
+            },
             {
                 "node": TextNode("This has *text*", TextType.TEXT),
                 "type": TextType.ITALIC,
@@ -100,7 +100,13 @@ class TestTextNode(unittest.TestCase):
         ]
         for textnode in nodes:
             new_text_node = split_nodes_delimiter(
-                [textnode["node"]], textnode["node"].text[-1], textnode["type"]
+                [textnode["node"]],
+                (
+                    f"{textnode['node'].text[-1]}*"
+                    if textnode["type"] == TextType.BOLD
+                    else textnode["node"].text[-1]
+                ),
+                textnode["type"],
             )
             print(f"New text node {new_text_node}\n!!!!\n")
             self.assertEqual(
