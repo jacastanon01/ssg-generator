@@ -98,7 +98,7 @@ class TestTextNode(unittest.TestCase):
             },
             {"node": TextNode("This has `text`", TextType.TEXT), "type": TextType.CODE},
         ]
-        for i, textnode in enumerate(nodes):
+        for textnode in nodes:
             new_text_node = split_nodes_delimiter(
                 [textnode["node"]], textnode["node"].text[-1], textnode["type"]
             )
