@@ -1,6 +1,5 @@
-# import htmlnode, textnode
-from src.htmlnode import LeafNode
 from enum import Enum
+from src.htmlnode import LeafNode
 
 
 class TextType(Enum):
