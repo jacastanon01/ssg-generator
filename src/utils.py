@@ -1,6 +1,9 @@
 from enum import Enum
 from src.htmlnode import LeafNode
 
+IMAGE_FORMAT = "![{}]({})"
+LINK_FORMAT = "[{}]({})"
+
 
 class TextType(Enum):
     TEXT = "text"
