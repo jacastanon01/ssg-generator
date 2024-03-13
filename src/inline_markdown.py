@@ -1,6 +1,16 @@
 import re
-from src.utils import TextType
+from src.utils import TextType, IMAGE_FORMAT, LINK_FORMAT
 from src.textnode import TextNode
+
+
+def text_to_textnodes(old_text):
+    nodes = [TextNode(old_text, TextType.TEXT)]
+    nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+    nodes = split_nodes_delimiter(nodes, "*", TextType.ITALIC)
+    nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
+    nodes = split_nodes(nodes, TextType.IMAGE, extract_markdown_images, IMAGE_FORMAT)
+    nodes = split_nodes(nodes, TextType.LINK, extract_markdown_links, LINK_FORMAT)
+    return nodes
 
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
@@ -14,6 +24,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         "`": TextType.CODE,
     }
     set_text_type = text_type_by_delimiter.get(delimiter, None)
+
     if set_text_type == None:
         raise ValueError("Delimiter must be *, ** or `")
 
@@ -35,6 +46,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             if node_text == "":
                 continue
             if i % 2 == 0:
+                # print(f"split text {node_text}, {i}, {text_type}")
                 split_nodes_list.append(TextNode(node_text, TextType.TEXT))
             else:
                 split_nodes_list.append(TextNode(node_text, text_type))
