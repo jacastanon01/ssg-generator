@@ -4,6 +4,22 @@ from src.htmlnode import LeafNode
 IMAGE_FORMAT = "![{}]({})"
 LINK_FORMAT = "[{}]({})"
 
+# block_type_paragraph = "paragraph"
+# block_type_heading = "heading"
+# block_type_code = "code"
+# block_type_quote = "quote"
+# block_type_list_ul = "unordered_list"
+# block_type_list_ol - "ordered_list"
+
+
+class BlockType(Enum):
+    PARAGRAPH = "paragraph"
+    HEADING = "heading"
+    CODE = "code"
+    QUOTE = "quote"
+    UL = "unordered_list"
+    OL = "ordered_list"
+
 
 class TextType(Enum):
     TEXT = "text"

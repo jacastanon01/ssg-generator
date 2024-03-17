@@ -27,3 +27,37 @@ class TestBlockMarkdown(unittest.TestCase):
                 "* with items",
             ],
         )
+
+    def test_blocks_to_blocktype(self):
+        paragraph = "This has no special characters"
+
+        code_block = """
+        ```
+        def codeblock(hello):
+            I've prove I'm a codeblock
+        ```
+        """
+
+        heading = """
+        ###### Heading one
+        with text
+
+        """
+        heading_none = """
+        #######Invalid heading
+        """
+        heading_type = block_to_block_type(heading)
+        invalid_heading = block_to_block_type(heading_none)
+        para_type = block_to_block_type(paragraph)
+        code_type = block_to_block_type(code_block)
+
+        # self.assertEqual(heading_type, BlockType.HEADING)
+        self.assertEqual(
+            [heading_type, invalid_heading, para_type, code_type],
+            [
+                BlockType.HEADING,
+                BlockType.PARAGRAPH,
+                BlockType.PARAGRAPH,
+                BlockType.CODE,
+            ],
+        )
