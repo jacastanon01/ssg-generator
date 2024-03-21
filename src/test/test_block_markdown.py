@@ -34,7 +34,6 @@ class TestBlockMarkdown(unittest.TestCase):
         heading = """
         ###### Heading one
         with text
-
         """
         heading_none = """
         #######Invalid heading
@@ -58,3 +57,34 @@ class TestBlockMarkdown(unittest.TestCase):
             code_type,
             BlockType.CODE,
         )
+
+    def test_blocks_to_block_type_with_ordered_list(self):
+        ol_block = """
+        1. First things first
+        2. I'm the realest
+        """
+        incorrect_numbers_ol_block = """
+        1. First
+        3. Third
+        """
+        ol_block_type = block_to_block_type(ol_block)
+        para_block_type = block_to_block_type(incorrect_numbers_ol_block)
+
+        self.assertEqual(ol_block_type, BlockType.OL)
+        self.assertEqual(para_block_type, BlockType.PARAGRAPH)
+
+    def test_blocks_to_block_type_with_unordered_list(self):
+        ul_block = """* first
+        * second
+        * third """
+        ul_block_type = block_to_block_type(ul_block)
+
+        self.assertEqual(ul_block_type, BlockType.UL)
+
+    def test_blocks_to_block_type_with_quote(self):
+        quote_block = """>Quote
+        with multiple lines
+        """
+        quote_type = block_to_block_type(quote_block)
+
+        self.assertEqual(quote_type, BlockType.QUOTE)
