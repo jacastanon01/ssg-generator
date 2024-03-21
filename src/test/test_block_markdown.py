@@ -6,10 +6,6 @@ class TestBlockMarkdown(unittest.TestCase):
     def test_split_into_blocks(self):
         raw_markdown = """
         This is **bolded** paragraph
-
-
-
-
         This is another paragraph with *italic* text and `code` here
         This is the same paragraph on a new line
 
@@ -28,16 +24,13 @@ class TestBlockMarkdown(unittest.TestCase):
             ],
         )
 
-    def test_blocks_to_blocktype(self):
+    def test_blocks_to_block_type_with_plain_text(self):
         paragraph = "This has no special characters"
+        para_type = block_to_block_type(paragraph)
 
-        code_block = """
-        ```
-        def codeblock(hello):
-            I've prove I'm a codeblock
-        ```
-        """
+        self.assertEqual(para_type, BlockType.PARAGRAPH)
 
+    def test_blocks_to_block_type_with_heading(self):
         heading = """
         ###### Heading one
         with text
@@ -47,17 +40,21 @@ class TestBlockMarkdown(unittest.TestCase):
         #######Invalid heading
         """
         heading_type = block_to_block_type(heading)
-        invalid_heading = block_to_block_type(heading_none)
-        para_type = block_to_block_type(paragraph)
+        text_type = block_to_block_type(heading_none)
+
+        self.assertEqual(heading_type, BlockType.HEADING)
+        self.assertEqual(text_type, BlockType.PARAGRAPH)
+
+    def test_blocks_to_block_type_with_code(self):
+        code_block = """
+        ```
+        def codeblock(hello):
+            I've prove I'm a codeblock
+        ```
+        """
         code_type = block_to_block_type(code_block)
 
-        # self.assertEqual(heading_type, BlockType.HEADING)
         self.assertEqual(
-            [heading_type, invalid_heading, para_type, code_type],
-            [
-                BlockType.HEADING,
-                BlockType.PARAGRAPH,
-                BlockType.PARAGRAPH,
-                BlockType.CODE,
-            ],
+            code_type,
+            BlockType.CODE,
         )
