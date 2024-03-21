@@ -1,6 +1,7 @@
-from src.utils import BlockType
 import re
-from src.htmlnode import HTMLNode
+
+from utils import BlockType
+from htmlnode import HTMLNode
 
 
 def markdown_to_blocks(document: str) -> list[str]:
@@ -52,3 +53,14 @@ def is_numbers_ordered(lines: list[str]) -> bool:
 
 def markdown_to_html_node(markdown: str) -> HTMLNode:
     blocks_list = markdown_to_blocks(markdown)
+    types_of_blocks = [block_to_block_type(line) for line in blocks_list]
+    print(types_of_blocks)
+
+
+markdown = """
+# Heading1
+
+* list
+* list twoo
+"""
+markdown_to_html_node(markdown)

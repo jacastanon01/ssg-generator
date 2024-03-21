@@ -1,5 +1,5 @@
-from textnode import *
-from htmlnode import *
+from .textnode import TextNode
+from .htmlnode import HTMLNode
 
 
 def main():
@@ -7,7 +7,6 @@ def main():
     html = HTMLNode("a", "Google it", None, {"href": "http://google.com"})
     leaf1 = LeafNode("p", "This is a paragraph of text.")
     leaf2 = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
-    print(f"{split_nodes_delimiter([text], '*', TextType.ITALIC)}!!")
 
 
 if __name__ == "__main__":
