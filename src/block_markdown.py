@@ -43,7 +43,7 @@ def block_to_block_type(block: str) -> BlockType:
 def is_numbers_ordered(lines: list[str]) -> bool:
     for i, line in enumerate(lines):
         starts_with_number = re.search(r"^[0-9]\.( )", line)
-        print(f"line: {line, i}\nstartswith: {starts_with_number}")
+
         if starts_with_number is None:
             return False
         if int(line[0]) != i + 1:
