@@ -63,12 +63,12 @@ class TestBlockMarkdown(unittest.TestCase):
         1. First things first
         2. I'm the realest
         """
-        incorrect_numbers_ol_block = """
+        invalid_numbers_ol_block = """
         1. First
         3. Third
         """
         ol_block_type = block_to_block_type(ol_block)
-        para_block_type = block_to_block_type(incorrect_numbers_ol_block)
+        para_block_type = block_to_block_type(invalid_numbers_ol_block)
 
         self.assertEqual(ol_block_type, BlockType.OL)
         self.assertEqual(para_block_type, BlockType.PARAGRAPH)
@@ -77,9 +77,20 @@ class TestBlockMarkdown(unittest.TestCase):
         ul_block = """* first
         * second
         * third """
+        invalid_ul_block = """* one
+        *invalid bullet point
+        """
+        ul_block_with_dash = """
+        - one
+        - two
+        """
         ul_block_type = block_to_block_type(ul_block)
+        ul_dash_block_type = block_to_block_type(ul_block_with_dash)
+        invalid_ul_block_type = block_to_block_type(invalid_ul_block)
 
         self.assertEqual(ul_block_type, BlockType.UL)
+        self.assertEqual(ul_dash_block_type, BlockType.UL)
+        self.assertEqual(invalid_ul_block_type, BlockType.PARAGRAPH)
 
     def test_blocks_to_block_type_with_quote(self):
         quote_block = """>Quote

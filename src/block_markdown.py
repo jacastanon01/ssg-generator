@@ -23,7 +23,7 @@ def block_to_block_type(block: str) -> BlockType:
     # conditions for types
     has_heading = re.search(r"^(#{1,6})\s+(.+?)", block)
     has_ordered_list = is_numbers_ordered(lines_list)
-    has_unordered_list = all(map(lambda x: x.startswith("* "), lines_list))
+    has_unordered_list = all(map(lambda x: re.search(r"^(\*|-)\s", x), lines_list))
 
     if has_heading:
         return BlockType.HEADING
@@ -41,7 +41,7 @@ def block_to_block_type(block: str) -> BlockType:
 
 def is_numbers_ordered(lines: list[str]) -> bool:
     for i, line in enumerate(lines):
-        starts_with_number = re.search(r"^[0-9]\.( )(.?+)", line)
+        starts_with_number = re.search(r"^[0-9]\.( )", line)
         print(f"line: {line, i}\nstartswith: {starts_with_number}")
         if starts_with_number is None:
             return False
