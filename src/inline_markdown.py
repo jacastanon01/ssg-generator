@@ -1,7 +1,7 @@
 import re
 
-from .utils import TextType, IMAGE_FORMAT, LINK_FORMAT
-from .textnode import TextNode
+from src.utils import TextType, IMAGE_FORMAT, LINK_FORMAT
+from src.textnode import TextNode
 
 
 def text_to_textnodes(old_text):

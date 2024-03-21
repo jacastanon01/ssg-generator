@@ -5,6 +5,7 @@ from src.block_markdown import (
     markdown_to_html_node,
     block_to_block_type,
 )
+from src.utils import TextType, BlockType
 
 
 class TestBlockMarkdown(unittest.TestCase):

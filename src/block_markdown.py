@@ -1,7 +1,7 @@
 import re
 
-from utils import BlockType
-from htmlnode import HTMLNode
+from src.utils import BlockType
+from src.htmlnode import HTMLNode
 
 
 def markdown_to_blocks(document: str) -> list[str]:
