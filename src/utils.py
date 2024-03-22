@@ -1,6 +1,7 @@
 from enum import Enum
 
 from src.htmlnode import LeafNode
+from src.textnode import TextNode
 
 IMAGE_FORMAT = "![{}]({})"
 LINK_FORMAT = "[{}]({})"
@@ -31,7 +32,7 @@ class TextType(Enum):
     IMAGE = "image"
 
 
-def text_node_to_html_node(textnode):
+def text_node_to_html_node(textnode: TextNode) -> LeafNode:
     node_text_type = textnode.text_type
     if node_text_type == TextType.TEXT:
         return LeafNode(None, textnode.text)

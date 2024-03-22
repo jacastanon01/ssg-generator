@@ -1,4 +1,5 @@
 import re
+import typing
 
 from src.utils import TextType, IMAGE_FORMAT, LINK_FORMAT
 from src.textnode import TextNode
@@ -14,7 +15,7 @@ def text_to_textnodes(old_text):
     return nodes
 
 
-def split_nodes_delimiter(old_nodes, delimiter, text_type):
+def split_nodes_delimiter(old_nodes: list, delimiter: str, text_type: TextType):
     """Split nodes by delimiter and return a list of text nodes with the correct TextType."""
     if not isinstance(old_nodes, list):
         raise ValueError("Old nodes must be a list")
@@ -55,17 +56,22 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     return new_nodes
 
 
-def extract_markdown_images(text):
+def extract_markdown_images(text: str) -> tuple[str, str]:
     images_from_markdown = re.findall(r"!\[(.*?)\]\((.*?)\)", text)
     return images_from_markdown
 
 
-def extract_markdown_links(text):
+def extract_markdown_links(text: str) -> tuple[str, str]:
     links_from_markdown = re.findall(r"\[(.*?)\]\((.*?)\)", text)
     return links_from_markdown
 
 
-def split_nodes(old_nodes, text_type, extract_markdown, split_format):
+def split_nodes(
+    old_nodes: list[TextNode],
+    text_type: TextType,
+    extract_markdown: typing.Callable[[str], tuple[str, str]],
+    split_format: str,
+) -> list[TextNode]:
     new_nodes = []
     for node in old_nodes:
         if not isinstance(node, TextNode):
