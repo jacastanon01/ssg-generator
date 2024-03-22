@@ -1,7 +1,7 @@
 import re
 
 from src.utils import BlockType
-from src.htmlnode import HTMLNode
+from src.htmlnode import HTMLNode, LeafNode, ParentNode
 
 
 def markdown_to_blocks(document: str) -> list[str]:
@@ -51,10 +51,30 @@ def is_numbers_ordered(lines: list[str]) -> bool:
     return True
 
 
+def block_to_leaf_node(block: str) -> LeafNode:
+    pass
+
+
+def header_to_html_header(block: str) -> str:
+    hashes = re.search(r"^#{1,6}", block)
+    hash_count = 0
+    if block[0] == "#":
+        hashes = 0
+        for i in range(hashes.span()):
+            count += 1
+
+
 def markdown_to_html_node(markdown: str) -> HTMLNode:
     blocks_list = markdown_to_blocks(markdown)
     types_of_blocks = [block_to_block_type(line) for line in blocks_list]
-    print(types_of_blocks)
+    nodes_list = []
+    for i, block in enumerate(blocks_list):
+        if block[0] == "#":
+            nodes_list.append(header_to_html_header(block))
+            continue
+        # if type is quote, code or list, need a parent node
+        # leaf nodes will consists on multiple i
+        print(f"Block: {block}\nType: {types_of_blocks[i]}")
 
 
 markdown = """
