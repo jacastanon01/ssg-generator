@@ -87,4 +87,4 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
         # if type is quote, code or list, need a parent node
         # leaf nodes will consists on multiple i
         print(f"******\nBlock: {block}\nType: {types_of_blocks[i]}\n****")
-    parent_node = HTMLNode("main", None, None)  # Pass children nodes
+    parent_node = HTMLNode("div", None, None)  # Pass children nodes
