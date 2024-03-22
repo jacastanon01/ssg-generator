@@ -1,8 +1,9 @@
 import re
 import typing
 
-from src.utils import TextType, IMAGE_FORMAT, LINK_FORMAT
+from src.utils import IMAGE_FORMAT, LINK_FORMAT
 from src.textnode import TextNode
+from src.enumtypes import TextType
 
 
 def text_to_textnodes(old_text):

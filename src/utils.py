@@ -1,7 +1,6 @@
-from enum import Enum
-
 from src.htmlnode import LeafNode
 from src.textnode import TextNode
+from src.enumtypes import TextType
 
 IMAGE_FORMAT = "![{}]({})"
 LINK_FORMAT = "[{}]({})"
@@ -12,24 +11,6 @@ LINK_FORMAT = "[{}]({})"
 # block_type_quote = "quote"
 # block_type_list_ul = "unordered_list"
 # block_type_list_ol - "ordered_list"
-
-
-class BlockType(Enum):
-    PARAGRAPH = "paragraph"
-    HEADING = "heading"
-    CODE = "code"
-    QUOTE = "quote"
-    UL = "unordered_list"
-    OL = "ordered_list"
-
-
-class TextType(Enum):
-    TEXT = "text"
-    BOLD = "bold"
-    ITALIC = "italic"
-    CODE = "code"
-    LINK = "link"
-    IMAGE = "image"
 
 
 def text_node_to_html_node(textnode: TextNode) -> LeafNode:

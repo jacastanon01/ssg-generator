@@ -1,7 +1,8 @@
 import unittest
 
 from src.textnode import TextNode
-from src.utils import TextType, IMAGE_FORMAT, LINK_FORMAT
+from src.enumtypes import TextType
+from src.utils import IMAGE_FORMAT, LINK_FORMAT
 from src.inline_markdown import split_nodes_delimiter, split_nodes, text_to_textnodes, extract_markdown_images, extract_markdown_links
 
 

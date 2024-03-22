@@ -1,6 +1,6 @@
 import re
 
-from src.utils import BlockType
+from src.enumtypes import BlockType
 from src.htmlnode import HTMLNode, LeafNode, ParentNode
 
 
