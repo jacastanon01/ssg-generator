@@ -35,7 +35,7 @@ class LeafNode(HTMLNode):
         self.value = value
         self.props = props
 
-    def __raise_if_no_value(self):
+    def raise_if_no_value(self):
         if self.value == None or not isinstance(self.value, str):
             raise ValueError(f"Invalid value {self.value}")
 
@@ -43,7 +43,7 @@ class LeafNode(HTMLNode):
         return f"LeafNode({self.tag}, {self.children}, {self.value}, {self.props})"
 
     def to_html(self):
-        self.__raise_if_no_value()
+        self.raise_if_no_value()
 
         if self.tag == None:
             return str(self.value)
@@ -58,7 +58,7 @@ class ParentNode(HTMLNode):
         self.children = children
         self.props = props
 
-    def __raise_if_invalid(self):
+    def raise_if_invalid(self):
         if self.tag == None:
             raise ValueError("ParentNode must have a tag")
         if self.children == None:
@@ -69,7 +69,7 @@ class ParentNode(HTMLNode):
         return f"ParentNode({self.tag}, {self.children}, {self.props})"
 
     def to_html(self):
-        self.__raise_if_invalid()
+        self.raise_if_invalid()
         if self.props:
             self.props = self.props.props_to_attributes()
         html_str = ""
