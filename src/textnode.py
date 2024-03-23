@@ -1,4 +1,5 @@
 from src.enumtypes import TextType
+from src.htmlnode import LeafNode
 
 
 class TextNode:
@@ -20,19 +21,18 @@ class TextNode:
         return f"TextNode({self.text}, {self.text_type}, {self.url})"
 
 
-def text_node_to_html_node(textnode):
+def text_node_to_html_node(textnode: TextNode) -> LeafNode:
     node_text_type = textnode.text_type
     if node_text_type == TextType.TEXT:
         return LeafNode(None, textnode.text)
-    elif node_text_type == TextType.BOLD:
+    if node_text_type == TextType.BOLD:
         return LeafNode("b", textnode.text)
-    elif node_text_type == TextType.ITALIC:
+    if node_text_type == TextType.ITALIC:
         return LeafNode("i", textnode.text)
-    elif node_text_type == TextType.CODE:
+    if node_text_type == TextType.CODE:
         return LeafNode("code", textnode.text)
-    elif node_text_type == TextType.IMAGE:
+    if node_text_type == TextType.IMAGE:
         return LeafNode("img", "", {"src": textnode.url, "alt": textnode.text})
-    elif node_text_type == TextType.LINK:
+    if node_text_type == TextType.LINK:
         return LeafNode("a", textnode.text, {"href": textnode.url})
-    else:
-        raise ValueError(f"Text type not supported: {node_text_type}")
+    raise ValueError(f"Text type not supported: {node_text_type}")

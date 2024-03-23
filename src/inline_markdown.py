@@ -6,7 +6,7 @@ from src.textnode import TextNode
 from src.enumtypes import TextType
 
 
-def text_to_textnodes(old_text):
+def text_to_textnodes(old_text) -> list[TextNode]:
     nodes = [TextNode(old_text, TextType.TEXT)]
     nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
     nodes = split_nodes_delimiter(nodes, "*", TextType.ITALIC)
@@ -16,7 +16,9 @@ def text_to_textnodes(old_text):
     return nodes
 
 
-def split_nodes_delimiter(old_nodes: list, delimiter: str, text_type: TextType):
+def split_nodes_delimiter(
+    old_nodes: list, delimiter: str, text_type: TextType
+) -> list[TextNode]:
     """Split nodes by delimiter and return a list of text nodes with the correct TextType."""
     if not isinstance(old_nodes, list):
         raise ValueError("Old nodes must be a list")
