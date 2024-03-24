@@ -70,11 +70,11 @@ def block_to_block_type(block: str) -> BlockType:
     # strip whitesapce from block argument
     block = block.strip()
     # conditions for types
-    has_heading = re.search(r"^(#{1,6})\s+(.+?)", block)
+    has_heading = re.search(r"^(#{1,6}) ", block)
     has_ordered_list = is_numbers_ordered(lines_list)
     has_unordered_list = all(map(lambda x: re.search(r"^(\*|-)\s", x), lines_list))
 
-    if has_heading and has_heading.group(1):
+    if has_heading and has_heading.group():
         return BlockType.HEADING
     if "```" == lines_list[0] and "```" == lines_list[-1]:
         # if "```" in block[3:] and "```" in block[:-3]:
