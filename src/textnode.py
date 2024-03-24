@@ -32,7 +32,7 @@ def text_node_to_html_node(textnode: TextNode) -> LeafNode:
     if node_text_type == TextType.CODE:
         return LeafNode("code", textnode.text)
     if node_text_type == TextType.IMAGE:
-        return LeafNode("img", "", {"src": textnode.url, "alt": textnode.text})
+        return LeafNode("img", "", {"src": textnode.url, "alt": node_text_type})
     if node_text_type == TextType.LINK:
         return LeafNode("a", textnode.text, {"href": textnode.url})
     raise ValueError(f"Text type not supported: {node_text_type}")
