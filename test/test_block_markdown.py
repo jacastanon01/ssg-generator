@@ -33,7 +33,7 @@ This is the same paragraph on a new line
 
 ## Heading two
 
-with text in a paragraph
+with text and `code` in a paragraph
         """
         heading_none = """
  ####### Invalid heading
@@ -46,7 +46,7 @@ with text in a paragraph
 
         self.assertEqual(
             html_h_node.to_html(),
-            "<div><h1>Heading one</h1><h2>Heading two</h2><p>with text in a paragraph</p></div>",
+            "<div><h1>Heading one</h1><h2>Heading two</h2><p>with text and <code>code</code> in a paragraph</p></div>",
         )
         # self.assertEqual(
         #     html_p_node.to_html(), "<div><p>####### Invalid heading</p></div>"
@@ -71,7 +71,7 @@ def codeblock(hello):
     def test_block_to_ordered_list(self):
         ol_block = """
 1. First things first
-2. I'm the realest
+2. I'm the **realest** 
         """
         invalid_numbers_ol_block = """
 1. First
@@ -81,6 +81,10 @@ def codeblock(hello):
         para_block_type = block_to_block_type(invalid_numbers_ol_block)
         html_ol_node = markdown_to_html_node(ol_block)
 
+        self.assertEqual(
+            html_ol_node.to_html(),
+            "<div><ol><li>First things first</li><li>I'm the <b>realest</b></li></ol></div>",
+        )
         self.assertEqual(ol_block_type, BlockType.OL)
         self.assertEqual(para_block_type, BlockType.PARAGRAPH)
 
