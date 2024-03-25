@@ -22,6 +22,7 @@ class TextNode:
 
 
 def text_node_to_html_node(textnode: TextNode) -> LeafNode:
+    """Returns text to be inserted in HTML"""
     node_text_type = textnode.text_type
     if node_text_type == TextType.TEXT:
         return LeafNode(None, textnode.text)

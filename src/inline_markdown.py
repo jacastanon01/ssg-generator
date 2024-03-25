@@ -6,7 +6,8 @@ from src.textnode import TextNode
 from src.enumtypes import TextType
 
 
-def text_to_textnodes(old_text) -> list[TextNode]:
+def text_to_textnodes(old_text: str) -> list[TextNode]:
+    """Formats a string into TextNode objects"""
     nodes = [TextNode(old_text, TextType.TEXT)]
     nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
     nodes = split_nodes_delimiter(nodes, "*", TextType.ITALIC)
@@ -60,11 +61,13 @@ def split_nodes_delimiter(
 
 
 def extract_markdown_images(text: str) -> tuple[str, str]:
+    """Takes markdown and returns a tuple containing the text and link for image"""
     images_from_markdown = re.findall(r"!\[(.*?)\]\((.*?)\)", text)
     return images_from_markdown
 
 
 def extract_markdown_links(text: str) -> tuple[str, str]:
+    """Extracts text and link from markdown and returns as tuple pair"""
     links_from_markdown = re.findall(r"\[(.*?)\]\((.*?)\)", text)
     return links_from_markdown
 
@@ -75,6 +78,7 @@ def split_nodes(
     extract_markdown: typing.Callable[[str], tuple[str, str]],
     split_format: str,
 ) -> list[TextNode]:
+    """Returns updated TextNodes with attributes"""
     new_nodes = []
     for node in old_nodes:
         if not isinstance(node, TextNode):

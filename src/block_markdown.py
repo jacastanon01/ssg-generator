@@ -6,8 +6,8 @@ from src.textnode import text_node_to_html_node, TextNode
 from src.inline_markdown import text_to_textnodes
 
 
-# break down int blocks
 def markdown_to_blocks(document: str) -> list[str]:
+    """Break down markdown file into list of each block in document"""
     blocks_list = []
     split_blocks = document.split("\n\n")
     for line in split_blocks:
@@ -18,8 +18,9 @@ def markdown_to_blocks(document: str) -> list[str]:
     return blocks_list
 
 
-# take each block and return html node according to its type
 def markdown_to_html_node(markdown: str) -> ParentNode:
+    """Takes in raw markdown, breaks into blocks and
+    returns a single div that with nested HTML nodes"""
     blocks_list = markdown_to_blocks(markdown)
     children = []
     for block in blocks_list:
@@ -27,8 +28,8 @@ def markdown_to_html_node(markdown: str) -> ParentNode:
     return ParentNode("div", children)
 
 
-# ParentNode("div", [children]) -> [TextNode("p", children) or Parent("div", [TextNode(grandchilren])) ]
 def block_to_html_node(block: str) -> ParentNode:
+    """Returns HTML node based on content from markdown"""
     block_type = block_to_block_type(block)
     if block_type == BlockType.HEADING:
         return header_to_html_node(block)
@@ -46,6 +47,7 @@ def block_to_html_node(block: str) -> ParentNode:
 
 
 def text_to_children_nodes(text: str) -> list[TextNode]:
+    """Returns a list of child TextNodes from a string"""
     text_nodes = text_to_textnodes(text)
     children = []
     for node in text_nodes:
@@ -101,6 +103,8 @@ def header_to_html_node(block: str) -> ParentNode:
     hash_count = 0
     if hashes:
         hash_count = len(hashes.group())
+    else:
+        raise ValueError(f"Error extracting hashes: {hashes}")
     h_tag = f"h{hash_count}"
     children = text_to_children_nodes(block[hash_count:].strip())
     return ParentNode(h_tag, children)
