@@ -3,7 +3,7 @@ import os
 import shutil
 
 
-def main():
+def main() -> None:
     abs_path = os.getcwd()
 
     if os.path.exists(f"{abs_path}/public"):
@@ -17,7 +17,7 @@ def main():
     copy_contents(sourcedir, destination)
 
 
-def copy_contents(source: str, destination: str):
+def copy_contents(source: str, destination: str) -> None:
     listdirs = os.listdir(
         source
     )  # list all items in the source directory for processing
