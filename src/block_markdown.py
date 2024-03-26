@@ -94,7 +94,7 @@ def paragraph_to_html_node(block: str) -> ParentNode:
     split_lines = block.split("/n")
     lines = " ".join(split_lines)
     children = text_to_children_nodes(lines)
-    return ParentNode("section", children)
+    return ParentNode("p", children)
 
 
 def header_to_html_node(block: str) -> ParentNode:
@@ -131,8 +131,7 @@ def code_to_html_node(block: str) -> ParentNode:
 
 def ul_to_html_node(block: str) -> ParentNode:
     items = [
-        ParentNode("li", text_to_children_nodes(item.lstrip("-* ")))
-        for item in block.split("\n")
+        ParentNode("li", text_to_children_nodes(item[2:])) for item in block.split("\n")
     ]
     return ParentNode("ul", items)
 
