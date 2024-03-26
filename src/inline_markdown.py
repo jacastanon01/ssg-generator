@@ -5,6 +5,8 @@ from src.utils import IMAGE_FORMAT, LINK_FORMAT
 from src.textnode import TextNode
 from src.enumtypes import TextType
 
+VALID_DELIMITERS = ["*", "_", "**", "`"]
+
 
 def text_to_textnodes(old_text: str) -> list[TextNode]:
     """Formats a string into TextNode objects"""
@@ -14,6 +16,7 @@ def text_to_textnodes(old_text: str) -> list[TextNode]:
     nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
     nodes = split_nodes(nodes, TextType.IMAGE, extract_markdown_images, IMAGE_FORMAT)
     nodes = split_nodes(nodes, TextType.LINK, extract_markdown_links, LINK_FORMAT)
+    nodes = split_nodes_delimiter(nodes, "_", TextType.ITALIC)
     return nodes
 
 
@@ -24,14 +27,7 @@ def split_nodes_delimiter(
     if not isinstance(old_nodes, list):
         raise ValueError("Old nodes must be a list")
 
-    text_type_by_delimiter = {
-        "*": TextType.ITALIC,
-        "**": TextType.BOLD,
-        "`": TextType.CODE,
-    }
-    set_text_type = text_type_by_delimiter.get(delimiter, None)
-
-    if set_text_type == None:
+    if delimiter not in VALID_DELIMITERS:
         raise ValueError("Delimiter must be *, ** or `")
 
     new_nodes = []
@@ -44,10 +40,12 @@ def split_nodes_delimiter(
             continue
 
         split_nodes_list = []
-        split_text_nodes = node.text.split(delimiter)
 
-        if len(split_text_nodes) % 2 == 0:
-            raise ValueError("Invalid markdown")
+        is_valid_delimiters = validate_open_and_closing_delimiters(node)
+        if not is_valid_delimiters:
+            raise ValueError("Invalid markdown. Section not closed")
+
+        split_text_nodes = node.text.split(delimiter)
         for i, node_text in enumerate(split_text_nodes):
             if node_text == "":
                 continue
@@ -58,6 +56,22 @@ def split_nodes_delimiter(
                 split_nodes_list.append(TextNode(node_text, text_type))
         new_nodes.extend(split_nodes_list)
     return new_nodes
+
+
+def validate_open_and_closing_delimiters(textnode: TextNode) -> bool:
+    """Analyze text of node to verify matching opening and closing delimiters"""
+    split_text_nodes = textnode.text.split()
+    stack = []
+
+    print(f"\nSPLIT NODES:\n*********\n{split_text_nodes}*********")
+    for text in split_text_nodes:
+        if text in VALID_DELIMITERS:
+            if text in stack:
+                stack.pop()
+            else:
+                stack.append(text)
+
+    return not stack
 
 
 def extract_markdown_images(text: str) -> tuple[str, str]:
