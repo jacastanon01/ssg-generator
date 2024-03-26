@@ -11,9 +11,9 @@ def markdown_to_blocks(document: str) -> list[str]:
     blocks_list = []
     split_blocks = document.split("\n\n")
     for line in split_blocks:
-        line = line.strip()
         if line == "":
             continue
+        line = line.strip()
         blocks_list.append(line)
     return blocks_list
 
@@ -94,7 +94,7 @@ def paragraph_to_html_node(block: str) -> ParentNode:
     split_lines = block.split("/n")
     lines = " ".join(split_lines)
     children = text_to_children_nodes(lines)
-    return ParentNode("p", children)
+    return ParentNode("section", children)
 
 
 def header_to_html_node(block: str) -> ParentNode:
