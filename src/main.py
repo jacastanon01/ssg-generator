@@ -8,7 +8,7 @@ from src.block_markdown import markdown_to_blocks, markdown_to_html_node
 def main() -> None:
     sourcedir, destination = format_paths()
     copy_contents(sourcedir, destination)
-    generate_page("content/test.md", "template.html", "public/index.html")
+    generate_page("content/index.md", "template.html", "public/index.html")
 
 
 def format_paths() -> tuple[str, str]:
