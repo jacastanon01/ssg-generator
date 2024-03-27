@@ -63,7 +63,6 @@ def validate_open_and_closing_delimiters(textnode: TextNode) -> bool:
     split_text_nodes = textnode.text.split()
     stack = []
 
-    print(f"\nSPLIT NODES:\n*********\n{split_text_nodes}*********")
     for text in split_text_nodes:
         if text in VALID_DELIMITERS:
             if text in stack:
