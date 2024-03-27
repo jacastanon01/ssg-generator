@@ -8,7 +8,49 @@ from src.block_markdown import markdown_to_blocks, markdown_to_html_node
 def main() -> None:
     sourcedir, destination = format_paths()
     copy_contents(sourcedir, destination)
-    generate_page("content/index.md", "template.html", "public/index.html")
+    generate_pages_recursive("content", "template.html", "public")
+
+
+def generate_pages_recursive(
+    dir_path_content: str, template_path: str, dest_dir_path: str
+) -> None:
+    from_content = os.listdir(dir_path_content)
+
+    for item in from_content:
+        content_source_path = os.path.join(dir_path_content, item)
+        content_dest_path = os.path.join(dest_dir_path, item)
+        if os.path.isfile(content_source_path):
+            if content_source_path.endswith(".md"):
+                content_dest_path = content_dest_path.replace(".md", ".html")
+                generate_page(content_source_path, template_path, content_dest_path)
+        else:
+            generate_pages_recursive(
+                content_source_path, template_path, content_dest_path
+            )
+
+
+def generate_page(from_path: str, template_path: str, dest_path: str) -> None:
+    """Generate html page from markdown"""
+    print(
+        f"Generating page from {from_path} to {dest_path} using {template_path} as template..."
+    )
+    # read markdown and html files and save to variables
+    from_markdown, html_template = "", ""
+    with open(from_path, "r") as f:
+        from_markdown = f.read()
+    with open(template_path, "r") as f:
+        html_template = f.read()
+    # generate html from markdown
+    content = markdown_to_html_node(from_markdown)
+    title = extract_title(from_markdown)
+    # replace title and content with content
+    html_template = html_template.replace("{{ Title }}", title)
+    html_template = html_template.replace("{{ Content }}", content.to_html())
+    # write newly generated html into destination file
+    print(f"$$$$$\n{dest_path}\n$$$")
+    os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+    with open(dest_path, "w") as f:
+        f.write(html_template)
 
 
 def format_paths() -> tuple[str, str]:
@@ -60,29 +102,6 @@ def extract_title(markdown: str) -> str:
         raise Exception("No h1 header found in markdown")
 
     return title
-
-
-def generate_page(from_path: str, template_path: str, dest_path: str) -> None:
-    """Generate html page from markdown"""
-    print(
-        f"Generating page from {from_path} to {dest_path} using {template_path} as template..."
-    )
-    # read markdown and html files and save to variables
-    from_markdown, html_template = "", ""
-    with open(from_path, "r") as f:
-        from_markdown = f.read()
-    with open(template_path, "r") as f:
-        html_template = f.read()
-    # generate html from markdown
-    content = markdown_to_html_node(from_markdown)
-    title = extract_title(from_markdown)
-    # replace title and content with content
-    html_template = html_template.replace("{{ Title }}", title)
-    html_template = html_template.replace("{{ Content }}", content.to_html())
-    # write newly generated html into destination file
-    os.makedirs(os.path.dirname(dest_path), exist_ok=True)
-    with open(dest_path, "w") as f:
-        f.write(html_template)
 
 
 if __name__ == "__main__":
