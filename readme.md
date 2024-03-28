@@ -12,7 +12,7 @@ I prefer my projects to be organized into separate modules and quickly learned t
 
 ## How It Works
 
-When you run `./main.sh`, a `generate_pages_recursive` function is called which copies files and sub-directories from the static directory into a new directory. If a Markdown file is found in the static directory, it is converted to an HTML page with all the matching nodes. The bulk of this logic is contained in [src/block_markdown.py](https://github.com/jacastanon01/ssg-generator/blob/main/src/block_markdown.py) where each 'block' of Markdown is converted according to its type and the text inside the block is handled seperately for inline text nodes.
+When you run `./main.sh`, a `generate_pages_recursive` function is called which copies files and sub-directories from the static directory into a new directory. Then content is generated from the content folder and if a Markdown file is found in the content directory, it is converted to an HTML page with all the matching nodes. The bulk of this logic is contained in [src/block_markdown.py](https://github.com/jacastanon01/ssg-generator/blob/main/src/block_markdown.py) where each 'block' of Markdown is converted according to its type and the text inside the block is handled seperately for inline text nodes.
 
 ## Unit Testing
 
