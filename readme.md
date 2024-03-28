@@ -7,6 +7,7 @@ This program takes a directory, converts the Markdown files to HTML and generate
 ### What I Learned
 
 This project was my first larger project using Python and I enjoyed the learning curves that came with it. I am more comfortable using node to manage projects and learning how Python modules operate was an excellent exploration outside my comfort zone!
+
 I prefer my projects to be organized into separate modules and quickly learned that Python treats each file as a module that can be instantiated once imported. This is why the conditonal `if __name__ == "__main__":` is commonly used. This prevents the module from being executed in unexpected places by explicitly checking where it was run. This was also my first foray with Python's standard `unittest` library and it made me be conscious of testing each piece before moving to the next task.
 
 ## How It Works
