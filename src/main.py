@@ -6,7 +6,7 @@ from src.block_markdown import markdown_to_blocks, markdown_to_html_node
 
 
 def main() -> None:
-    sourcedir, destination = format_paths()
+    sourcedir, destination = format_paths("static", "public")
     copy_contents(sourcedir, destination)
     generate_pages_recursive("content", "template.html", "public")
 
@@ -47,24 +47,23 @@ def generate_page(from_path: str, template_path: str, dest_path: str) -> None:
     html_template = html_template.replace("{{ Title }}", title)
     html_template = html_template.replace("{{ Content }}", content.to_html())
     # write newly generated html into destination file
-    print(f"$$$$$\n{dest_path}\n$$$")
     os.makedirs(os.path.dirname(dest_path), exist_ok=True)
     with open(dest_path, "w") as f:
         f.write(html_template)
 
 
-def format_paths() -> tuple[str, str]:
+def format_paths(source_dir: str, destination_dir: str) -> tuple[str, str]:
     """Return absolute paths of static and public directories
     to be used in copy_contents function"""
     abs_path = os.getcwd()
 
-    if os.path.exists(f"{abs_path}/public"):
-        shutil.rmtree(f"{abs_path}/public")
+    if os.path.exists(f"{abs_path}/{destination_dir}"):
+        shutil.rmtree(f"{abs_path}/{destination_dir}")
 
-    source = os.path.join(abs_path, "static")
+    source = os.path.join(abs_path, source_dir)
     if not os.path.exists(source):
-        raise NotADirectoryError("static directory does not exist in src")
-    destination = os.path.join(abs_path, "public")
+        raise NotADirectoryError(f"{source_dir} directory does not exist in src")
+    destination = os.path.join(abs_path, destination_dir)
 
     return source, destination
 
